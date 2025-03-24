@@ -45,7 +45,7 @@ function getUserDetails() {
     id: localStorage.getItem("userId") || "guest",
     name: localStorage.getItem("userName") || "Guest",
     email: localStorage.getItem("userEmail") || "guest@example.com",
-    role: localStorage.getItem("userRole") || "visitor",
+    role: localStorage.getItem("userRole") || "visitor_testing",
     lastLogin: localStorage.getItem("lastLogin") || new Date().toISOString(),
   };
 }
