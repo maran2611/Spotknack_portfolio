@@ -36,4 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // You can also add page events
     Appcues.page();
   }
+
+    // e.g. Clicked the purchase button
+Appcues.track("Clicked purchase button");
+
+// e.g. Submitted a help ticket
+Appcues.track("Submitted help ticket", {
+  url: "/support",
+  article: "installation"
+});
 });
