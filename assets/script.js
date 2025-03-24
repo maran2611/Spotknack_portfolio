@@ -18,47 +18,50 @@ const removeActiveClasses = () => {
 
 };
 
-// Initialize Appcues when your app loads
-document.addEventListener('DOMContentLoaded', function() {
-  // Only initialize if Appcues is loaded
+document.addEventListener('DOMContentLoaded', function () {
   if (window.Appcues) {
-    // Identify the user (for testing purposes)
-    Appcues.identify(
-      "test-user-id", // A unique ID for the test user
-      {
-        // User properties (optional)
-        name: "Test User",
-        email: "mahamani.maran@akrity.com",
-        // Add any other user properties you want to track
-      }
-    );
-    
-    // You can also add page events
+    let user = getUserDetails(); // Fetch user details
+
+    if (user && user.id) {
+      Appcues.identify(user.id, {
+        name: user.name || "Unknown User",
+        email: user.email || "unknown@example.com",
+        role: user.role || "guest",
+        lastLogin: user.lastLogin || new Date().toISOString(),
+      });
+    }
+
+    // Track page visit
     Appcues.page();
+
+    // Example event tracking
+    trackUserEvents();
   }
-
-    // e.g. Clicked the purchase button
-Appcues.track("Clicked purchase button");
-
-// e.g. Submitted a help ticket
-Appcues.track("Submitted help ticket", {
-  url: "/support",
-  article: "installation"
-});
 });
 
-function getCurrentUserId() {
-  // This would typically come from your authentication system
-  return "actual-user-id";
+// Function to fetch user details (Modify as per your application)
+function getUserDetails() {
+  return {
+    id: localStorage.getItem("userId") || "guest",
+    name: localStorage.getItem("userName") || "Guest",
+    email: localStorage.getItem("userEmail") || "guest@example.com",
+    role: localStorage.getItem("userRole") || "visitor",
+    lastLogin: localStorage.getItem("lastLogin") || new Date().toISOString(),
+  };
 }
 
-// Use actual user data when available
-if (window.Appcues && getCurrentUserId()) {
-  Appcues.identify(
-    getCurrentUserId(),
-    {
-      // Real user properties
-      // ...
+// Function to track user interactions
+function trackUserEvents() {
+  document.addEventListener("click", function (event) {
+    if (event.target.matches(".purchase-button")) {
+      Appcues.track("Clicked purchase button");
     }
-  );
+
+    if (event.target.matches(".help-ticket-button")) {
+      Appcues.track("Submitted help ticket", {
+        url: "/support",
+        article: "installation",
+      });
+    }
+  });
 }
