@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
       Appcues.identify(user.id, {
         name: user.name || "Unknown User",
         email: user.email || "unknown@example.com",
-        role: user.role || "guest",
+        role: user.role || "GUEST_TESTER",
         lastLogin: user.lastLogin || new Date().toISOString(),
       });
     }
