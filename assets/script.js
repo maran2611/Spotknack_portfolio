@@ -46,3 +46,19 @@ Appcues.track("Submitted help ticket", {
   article: "installation"
 });
 });
+
+function getCurrentUserId() {
+  // This would typically come from your authentication system
+  return "actual-user-id";
+}
+
+// Use actual user data when available
+if (window.Appcues && getCurrentUserId()) {
+  Appcues.identify(
+    getCurrentUserId(),
+    {
+      // Real user properties
+      // ...
+    }
+  );
+}
